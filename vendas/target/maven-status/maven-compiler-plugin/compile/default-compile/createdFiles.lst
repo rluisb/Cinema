@@ -1,0 +1,9 @@
+com\trabalho\vendas\model\repository\ProductRepository.class
+com\trabalho\vendas\model\repository\SaleRepository.class
+com\trabalho\vendas\model\entity\Product.class
+com\trabalho\vendas\model\entity\Client.class
+com\trabalho\vendas\model\controller\ProductController.class
+com\trabalho\vendas\model\entity\Sale.class
+com\trabalho\vendas\model\controller\ClientController.class
+com\trabalho\vendas\model\repository\ClientRepository.class
+com\trabalho\vendas\model\controller\SaleController.class
