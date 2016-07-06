@@ -11,179 +11,211 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Cliente;
 
-public class ClienteDaoBd implements ClienteDao{
+public class ClienteDaoBd implements ClienteDao {
 
     private Connection conexao;
     private PreparedStatement comando;
 
     @Override
     public void inserir(Cliente cliente) {
+        int id = 0;
         try {
-            String sql = "INSERT INTO cliente (rg,nome,endereco,telefone) VALUES(?,?,?,?)";
-            conectar(sql);
-            comando = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            comando.setString(1, cliente.getRg());
-            comando.setString(2, cliente.getNome());
-            comando.setString(3, cliente.getEndereco());
-            comando.setString(4, cliente.getTelefone());
+            String sql = "INSERT INTO cliente (rg, nome, telefone) "
+                    + "VALUES (?,?,?)";
+
+            conectarObtendoId(sql);
+            comando.setString(1, cliente.getNome());
+            comando.setString(2, cliente.getRg());
+            comando.setString(3, cliente.getTelefone());
             comando.executeUpdate();
             ResultSet resultado = comando.getGeneratedKeys();
-            if(resultado.next())
-                cliente.setId(resultado.getInt(1));
-            fecharConexao();
+            if (resultado.next()) {
+                id = resultado.getInt(1);
+                cliente.setId(id);
+            }
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            fecharConexao();
         }
     }
 
     @Override
     public void deletar(Cliente cliente) {
         try {
-            String sql = "DELETE FROM cliente WHERE id=?";
+            String sql = "DELETE FROM cliente WHERE id = ?";
+
             conectar(sql);
             comando.setInt(1, cliente.getId());
             comando.executeUpdate();
-            fecharConexao();
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            fecharConexao();
         }
     }
 
     @Override
-    public void atualizar(Cliente pessoa) {
+    public void atualizar(Cliente cliente) {
         try {
-            String sql = "UPDATE cliente SET rg=?, nome=?, endereco=?, telefone=? WHERE id=?";
+            String sql = "UPDATE cliente SET rg=?, nome=?, telefone=? "
+                    + "WHERE id=?";
+
             conectar(sql);
-            comando.setString(1, pessoa.getRg());
-            comando.setString(2, pessoa.getNome());
-            comando.setString(3, pessoa.getEndereco());
-            comando.setString(4, pessoa.getTelefone());
-            comando.setInt(5, pessoa.getId());
+            comando.setString(1, cliente.getNome());
+            comando.setString(2, cliente.getNome());
+            comando.setString(3, cliente.getTelefone());
+            comando.setInt(4, cliente.getId());
             comando.executeUpdate();
-            fecharConexao();
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public Cliente buscarPorId(int id) {
-        Cliente cliente = null;
-        try {
-            String sql = "SELECT * FROM cliente WHERE id=?";
-            conectar(sql);
-            comando.setInt(1, id);
-            ResultSet resultado = comando.executeQuery();
-            if (resultado.next()) {
-                cliente = new Cliente(resultado.getInt("id"),
-                        resultado.getString("rg"),
-                        resultado.getString("nome"),
-                        resultado.getString("endereco"),
-                        resultado.getString("telefone"));
-            }
+        } finally {
             fecharConexao();
-
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return cliente;
-    }
-
-    @Override
-    public Cliente buscarPorRg(String rg) {
-        Cliente cliente = null;
-        try {
-            String sql = "SELECT * FROM cliente WHERE rg=?";
-            conectar(sql);
-            comando.setString(1, rg);
-            ResultSet resultado = comando.executeQuery();
-            if (resultado.next()) {
-                cliente = new Cliente(resultado.getInt("id"),
-                        resultado.getString("rg"),
-                        resultado.getString("nome"),
-                        resultado.getString("endereco"),
-                        resultado.getString("telefone"));
-            }
-            fecharConexao();
-
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return cliente;
-    }
-    
-    @Override
-    public List<Cliente> buscarPorNome(String nome) {
-        List<Cliente> listaClientes = new ArrayList<Cliente>();
-        try {
-            String sql = "SELECT * FROM cliente WHERE nome LIKE ?";
-            conectar(sql);
-            comando.setString(1, "%"+nome+"%");
-            ResultSet resultado = comando.executeQuery();
-            while (resultado.next()) {
-                Cliente cliente = new Cliente(resultado.getInt("id"),
-                        resultado.getString("rg"),
-                        resultado.getString("nome"),
-                        resultado.getString("endereco"),
-                        resultado.getString("telefone"));
-                listaClientes.add(cliente);
-            }
-            fecharConexao();
-
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listaClientes;
     }
 
     @Override
     public List<Cliente> listar() {
-        List<Cliente> listaClientes = new ArrayList<Cliente>();
-        try {
-            String sql = "SELECT * FROM cliente";
-            conectar(sql);
-            ResultSet resultado = comando.executeQuery();
-            while (resultado.next()) {
-                Cliente cliente = new Cliente(resultado.getInt("id"),
-                        resultado.getString("rg"),
-                        resultado.getString("nome"),
-                        resultado.getString("endereco"),
-                        resultado.getString("telefone"));
-                listaClientes.add(cliente);
-            }
-            fecharConexao();
+        List<Cliente> listaClientes = new ArrayList<>();
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
+        String sql = "SELECT * FROM cliente ";
+
+        try {
+            conectar(sql);
+
+            ResultSet resultado = comando.executeQuery();
+
+            while (resultado.next()) {
+                int id = resultado.getInt("id");
+                String rg = resultado.getString("rg");
+                String nome = resultado.getString("nome");
+                String telefone = resultado.getString("telefone");
+
+                Cliente cli = new Cliente(id, nome, rg, telefone);
+
+                listaClientes.add(cli);
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            fecharConexao();
         }
-        return listaClientes;
+
+        return (listaClientes);
     }
 
-    private void conectar(String sql) throws ClassNotFoundException, SQLException {
+    @Override
+    public Cliente procurarPorId(int id) {
+        String sql = "SELECT * FROM cliente WHERE id = ?";
+
+        try {
+            conectar(sql);
+            comando.setInt(1, id);
+
+            ResultSet resultado = comando.executeQuery();
+
+            if (resultado.next()) {
+                String rg = resultado.getString("rg");
+                String nome = resultado.getString("nome");
+                String telefone = resultado.getString("telefone");
+
+                Cliente cli = new Cliente(id, nome, rg, telefone);
+
+                return cli;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            fecharConexao();
+        }
+
+        return (null);
+    }
+
+    @Override
+    public Cliente procurarPorRg(String rg) {
+        String sql = "SELECT * FROM cliente WHERE rg = ?";
+
+        try {
+            conectar(sql);
+            comando.setString(1, rg);
+
+            ResultSet resultado = comando.executeQuery();
+
+            if (resultado.next()) {
+                int id = resultado.getInt("id");
+                String nome = resultado.getString("nome");
+                String telefone = resultado.getString("telefone");
+
+                Cliente cli = new Cliente(id, nome, rg, telefone);
+
+                return cli;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            fecharConexao();
+        }
+
+        return (null);
+    }
+
+    @Override
+    public List<Cliente> procurarPorNome(String nome) {
+        List<Cliente> listaClientes = new ArrayList<>();
+        String sql = "SELECT * FROM cliente WHERE nome LIKE ?";
+
+        try {
+            conectar(sql);
+            comando.setString(1, "%" + nome + "%");
+            ResultSet resultado = comando.executeQuery();
+
+            while (resultado.next()) {
+                int id = resultado.getInt("id");
+                String rg = resultado.getString("rg");
+                String nomeX = resultado.getString("nome");
+                String telefone = resultado.getString("telefone");
+
+                Cliente cli = new Cliente(id, nomeX, rg, telefone);
+
+                listaClientes.add(cli);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            fecharConexao();
+        }
+
+        return (listaClientes);
+    }
+
+    public void conectar(String sql) throws SQLException {
         conexao = ConnectionFactory.getConnection();
         comando = conexao.prepareStatement(sql);
     }
 
-    private void fecharConexao() throws SQLException {
-        comando.close();
-        conexao.close();
+    public void conectarObtendoId(String sql) throws SQLException {
+        conexao = ConnectionFactory.getConnection();
+        comando = conexao.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
     }
-    
+
+    public void fecharConexao() {
+        try {
+            if (comando != null) {
+                comando.close();
+            }
+            if (conexao != null) {
+                conexao.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDaoBd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

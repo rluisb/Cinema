@@ -5,22 +5,19 @@ import java.util.Date;
 public class Sessao {
 	
 	private int id;
-	private int sala;
+	private Sala sala;
 	private Date hora;
-	private int filme;
 	
-	public Sessao(int sala, Date hora, int filme) {
+	public Sessao(Sala sala, Date hora) {
 		this.id = -1;
 		this.sala = sala;
 		this.hora = hora;
-		this.filme = filme;
 	}
 	
-	public Sessao(int id, int sala, Date hora, int filme) {
+	public Sessao(int id, Sala sala, Date hora) {
 		this.id = id;
 		this.sala = sala;
 		this.hora = hora;
-		this.filme = filme;
 	}
 
 	public int getId() {
@@ -31,11 +28,11 @@ public class Sessao {
 		this.id = id;
 	}
 
-	public int getSala() {
+	public Sala getSala() {
 		return sala;
 	}
 
-	public void setSala(int sala) {
+	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
 
@@ -46,23 +43,14 @@ public class Sessao {
 	public void setHora(Date hora) {
 		this.hora = hora;
 	}
-	
-	public int getFilme() {
-		return filme;
-	}
-
-	public void setFilme(int filme) {
-		this.filme = filme;
-	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + filme;
 		result = prime * result + ((hora == null) ? 0 : hora.hashCode());
 		result = prime * result + id;
-		result = prime * result + sala;
+		result = prime * result + ((sala == null) ? 0 : sala.hashCode());
 		return result;
 	}
 
@@ -75,8 +63,6 @@ public class Sessao {
 		if (getClass() != obj.getClass())
 			return false;
 		Sessao other = (Sessao) obj;
-		if (filme != other.filme)
-			return false;
 		if (hora == null) {
 			if (other.hora != null)
 				return false;
@@ -84,17 +70,17 @@ public class Sessao {
 			return false;
 		if (id != other.id)
 			return false;
-		if (sala != other.sala)
+		if (sala == null) {
+			if (other.sala != null)
+				return false;
+		} else if (!sala.equals(other.sala))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Sessao [id=" + id + ", sala=" + sala + ", hora=" + hora + ", filme=" + filme + "]";
+		return "Sessao [id=" + id + ", sala=" + sala + ", hora=" + hora + "]";
 	}
-
 	
-	
-
 }

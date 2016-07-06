@@ -5,17 +5,20 @@ public class Sala {
 	private int id;
 	private int numero;
 	private int poltronas;
+	private Filme filme;
 	
-	public Sala(int numero, int poltronas) {
+	public Sala(int numero, int poltronas, Filme filme) {
 		this.id = -1;
 		this.numero = numero;
 		this.poltronas = poltronas;
+		this.filme = filme;
 	}
 	
-	public Sala(int id, int numero, int poltronas) {
+	public Sala(int id, int numero, int poltronas, Filme filme) {
 		this.id = id;
 		this.numero = numero;
 		this.poltronas = poltronas;
+		this.filme = filme;
 	}
 
 	public int getId() {
@@ -40,6 +43,14 @@ public class Sala {
 
 	public void setPoltronas(int poltronas) {
 		this.poltronas = poltronas;
+	}
+
+	public Filme getFilme() {
+		return filme;
+	}
+
+	public void setFilme(Filme filme) {
+		this.filme = filme;
 	}
 
 	@Override
@@ -69,7 +80,7 @@ public class Sala {
 
 	@Override
 	public String toString() {
-		return "Sala [id=" + id + ", numero=" + numero + ", poltronas=" + poltronas + "]";
+		return "Sala [id=" + id + ", numero=" + numero + ", poltronas=" + poltronas + ", filme=" + filme + "]";
 	}
-
+	
 }
