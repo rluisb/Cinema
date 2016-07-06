@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import model.Passagem;
 import servico.ClienteServico;
 import tableModels.PassagemTableModel;
-import viewFomularios.FormularioPassagem;
+import viewFomularios.FormularioSala;
 import viewTabelas.TabelaPassagem;
 import servico.VooServico;
 import servico.PassagemServico;
@@ -46,7 +46,7 @@ public class PassagemController {
     }
     
     public void inserirPassagem() {
-        FormularioPassagem painelForm = this.janela.getPainelFormulario();
+        FormularioSala painelForm = this.janela.getPainelFormulario();
 
         painelForm.limparCampos();
         
@@ -67,7 +67,7 @@ public class PassagemController {
     
     public void editarPassagem() {
         TabelaPassagem painelTabela = this.janela.getPainelTabela();
-        FormularioPassagem painelForm = this.janela.getPainelFormulario();
+        FormularioSala painelForm = this.janela.getPainelFormulario();
         PassagemTableModel tableModel = (PassagemTableModel) painelTabela.getTabela().getModel();
         
         linhaSelecionada = painelTabela.getTabela().getSelectedRow();
@@ -96,7 +96,7 @@ public class PassagemController {
     
     public void visualizarPassagem() {
         TabelaPassagem painelTabela = this.janela.getPainelTabela();
-        FormularioPassagem painelForm = this.janela.getPainelFormulario();
+        FormularioSala painelForm = this.janela.getPainelFormulario();
         PassagemTableModel tableModel = (PassagemTableModel) painelTabela.getTabela().getModel();
         
         linhaSelecionada = painelTabela.getTabela().getSelectedRow();
@@ -158,7 +158,7 @@ public class PassagemController {
     }
     
     public void atualizaComboBox() {
-        FormularioPassagem painelFormulario = this.janela.getPainelFormulario();
+        FormularioSala painelFormulario = this.janela.getPainelFormulario();
         VooComboBoxModel modeloVoo = (VooComboBoxModel) painelFormulario.getjComboBoxVoo().getModel();
                 
         modeloVoo.setVoos(servicoV.listarVoo());        

@@ -1,6 +1,6 @@
 package view;
 import viewTabelas.TabelaPassagem;
-import viewFomularios.FormularioPassagem;
+import viewFomularios.FormularioSala;
 import controller.PassagemController;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -15,7 +15,7 @@ public class JanelaPassagem extends javax.swing.JInternalFrame {
     public final static String PAINELFORM = "FormularioPassagem";
     public final static String PAINELTABELA = "TabelaPassagem";
     private JPanel painelPrincipal;
-    private FormularioPassagem painelFormulario;
+    private FormularioSala painelFormulario;
     private TabelaPassagem painelTabela;
 
     public JanelaPassagem(PassagemController control) {
@@ -38,14 +38,14 @@ public class JanelaPassagem extends javax.swing.JInternalFrame {
         painelPrincipal = new JPanel(new CardLayout());
         painelTabela = new TabelaPassagem(controller);
         painelPrincipal.add(painelTabela, PAINELTABELA);
-        painelFormulario = new FormularioPassagem(controller);
+        painelFormulario = new FormularioSala(controller);
         painelPrincipal.add(painelFormulario, PAINELFORM);
         this.add(painelPrincipal);
         this.setClosable(true);
         this.setTitle("Menu Passagem");
     }
     
-    public FormularioPassagem getPainelFormulario() {
+    public FormularioSala getPainelFormulario() {
         return painelFormulario;
     }
 
