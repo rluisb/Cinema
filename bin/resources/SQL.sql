@@ -1,0 +1,28 @@
+CREATE TABLE cliente(
+id serial PRIMARY KEY,
+nome VARCHAR(50) NOT NULL,
+rg VARCHAR(10) NOT NULL,
+telefone VARCHAR(11) NOT NULL);
+
+CREATE TABLE filme(
+id serial PRIMARY KEY,
+nome VARCHAR(50) NOT NULL,
+sinopse VARCHAR(160) NOT NULL,
+genero VARCHAR(30) NOT NULL);
+
+CREATE TABLE sala(
+id serial PRIMARY KEY,
+numero INTEGER NOT NULL,
+poltronas INTEGER NOT NULL,
+filme INTEGER NOT NULL REFERENCES filme(id));
+
+CREATE TABLE sessao(
+id serial PRIMARY KEY,
+sala INTEGER NOT NULL REFERENCES sala(id),
+data INTEGER NOT NULL);
+
+CREATE TABLE venda(
+id serial PRIMARY KEY,
+sessao INTEGER NOT NULL REFERENCES sessao(id),
+cliente INTEGER NOT NULL REFERENCES cliente(id));
+
