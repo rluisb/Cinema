@@ -1,0 +1,14 @@
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\model\Venda.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\dao\VendaDao.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\model\Sessao.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\dao\Dao.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\dao\impl\VendaDaoImpl.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\dao\SessaoDao.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\dao\impl\SalaDaoImpl.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\dao\SalaDao.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\dao\impl\SessaoDaoImpl.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\model\Filme.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\util\LocalDatePersistenceConverter.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\dao\impl\FilmeDaoImpl.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\dao\FilmeDao.java
+C:\dev\Workspace\cinema\src\main\java\com\amarante\cinema\model\Sala.java

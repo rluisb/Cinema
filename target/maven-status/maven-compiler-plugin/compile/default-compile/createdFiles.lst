@@ -1,0 +1,14 @@
+com\amarante\cinema\dao\impl\SessaoDaoImpl.class
+com\amarante\cinema\model\Venda.class
+com\amarante\cinema\dao\SalaDao.class
+com\amarante\cinema\dao\SessaoDao.class
+com\amarante\cinema\model\Sala.class
+com\amarante\cinema\model\Filme.class
+com\amarante\cinema\dao\impl\FilmeDaoImpl.class
+com\amarante\cinema\dao\impl\SalaDaoImpl.class
+com\amarante\cinema\model\Sessao.class
+com\amarante\cinema\dao\Dao.class
+com\amarante\cinema\dao\VendaDao.class
+com\amarante\cinema\dao\impl\VendaDaoImpl.class
+com\amarante\cinema\dao\FilmeDao.class
+com\amarante\cinema\util\LocalDatePersistenceConverter.class
